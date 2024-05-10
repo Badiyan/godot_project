@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bao45uhy5ad0p"]
+[gd_scene load_steps=3 format=3 uid="uid://bao45uhy5ad0p"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_a0qq4"]
+[ext_resource type="PackedScene" uid="uid://d0g06pmkgjj8x" path="res://background.tscn" id="2_l2n6r"]
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_a0qq4")
@@ -22,4 +23,7 @@ theme_override_font_sizes/font_size = 50
 text = "EXIT
 "
 
+[node name="background" parent="." instance=ExtResource("2_l2n6r")]
+
+[connection signal="pressed" from="play_btn" to="." method="_on_play_btn_pressed"]
 [connection signal="pressed" from="exit_btn" to="." method="_on_exit_btn_pressed"]
