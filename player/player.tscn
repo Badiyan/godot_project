@@ -219,8 +219,9 @@ shape = SubResource("CapsuleShape2D_jqsto")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(2, -13)
 sprite_frames = SubResource("SpriteFrames_sc81l")
-animation = &"fall"
-frame_progress = 0.682241
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.799238
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.4, 2.4)
