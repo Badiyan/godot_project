@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dfgq8bld1rqlh"]
+
+[ext_resource type="Texture2D" uid="uid://41e6hgu4vv47" path="res://MonedaD.png" id="1_xh2a8"]
+
+[sub_resource type="GDScript" id="GDScript_116at"]
+script/source = "extends Area2D
+
+
+func _on_body_entered(body):
+	if body.name == \"player\":
+		var tween = get_tree().create_tween()
+		var tween1 = get_tree().create_tween()
+		tween.tween_property(self, \"position\", position - Vector2(0, 25), 0.3)
+		tween1.tween_property(self, \"modulate:a\", 0 , 0.3)
+		tween.tween_callback(queue_free)
+		body.gold += 1
+
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ebh5"]
+atlas = ExtResource("1_xh2a8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdonw"]
+atlas = ExtResource("1_xh2a8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iib4v"]
+atlas = ExtResource("1_xh2a8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvqtr"]
+atlas = ExtResource("1_xh2a8")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25au6"]
+atlas = ExtResource("1_xh2a8")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u5y74"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ebh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdonw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iib4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvqtr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25au6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_erm2l"]
+radius = 5.0
+
+[node name="gold" type="Area2D"]
+script = SubResource("GDScript_116at")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2.38419e-07, 2.38419e-07)
+scale = Vector2(0.75, 0.619565)
+sprite_frames = SubResource("SpriteFrames_u5y74")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.966554
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_erm2l")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

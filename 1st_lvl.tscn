@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bok2kqqd4oo37"]
+[gd_scene load_steps=13 format=3 uid="uid://bok2kqqd4oo37"]
 
 [ext_resource type="PackedScene" uid="uid://cgyvpfbqlw8iy" path="res://player/player.tscn" id="1_kbdy1"]
 [ext_resource type="Texture2D" uid="uid://01affnc2vrd7" path="res://oak_woods_v1.0/background/background_layer_1.png" id="2_4uh4j"]
@@ -1254,6 +1254,47 @@ func _process(delta):
 	text = \"HP: \" + str($\"../../Player/player\".health)
 "
 
+[sub_resource type="GDScript" id="GDScript_x6s0u"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+		text = \"GOLD: \" + str($\"../../Player/player\".gold)
+"
+
+[sub_resource type="GDScript" id="GDScript_1xkms"]
+script/source = "extends Node2D
+
+var gold = preload(\"res://collectables/gold.tscn\")
+
+func _on_timer_timeout():
+	var goldTemp = gold.instantiate()
+	var rng = RandomNumberGenerator.new
+	var randint = randi_range(8, 1000)
+	goldTemp.position = Vector2(randint, 568)
+	add_child(goldTemp)
+"
+
+[sub_resource type="GDScript" id="GDScript_hrssc"]
+script/source = "extends Timer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
 [node name="1st_lvl" type="Node2D"]
 
 [node name="background" type="ParallaxBackground" parent="."]
@@ -1314,7 +1355,26 @@ position = Vector2(480, 552)
 [node name="Label" type="Label" parent="CanvasLayer"]
 offset_left = 8.0
 offset_right = 256.0
-offset_bottom = 80.0
+offset_bottom = 42.0
 theme_override_font_sizes/font_size = 30
 text = "HP"
 script = SubResource("GDScript_q55a2")
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 92.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 30
+text = "GOLD"
+script = SubResource("GDScript_x6s0u")
+
+[node name="collectables" type="Node2D" parent="."]
+script = SubResource("GDScript_1xkms")
+
+[node name="Timer" type="Timer" parent="collectables"]
+wait_time = 3.0
+autostart = true
+script = SubResource("GDScript_hrssc")
+
+[connection signal="timeout" from="collectables/Timer" to="collectables" method="_on_timer_timeout"]
